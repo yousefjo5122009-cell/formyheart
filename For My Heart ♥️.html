@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentine's Day, Hadeer</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS VARIABLES & RESET */
+        :root {
+            --primary-color: #ff4d6d;
+            --secondary-color: #ff8fa3;
+            --bg-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-dark: #4a4a4a;
+            --text-red: #c9184a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-gradient);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* BACKGROUND ANIMATION */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* CONTAINER STYLES */
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        /* GLASS CARD STYLE */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            padding: 2rem;
+            transition: all 0.5s ease-in-out;
+        }
+
+        /* PHASE 1: LOGIN SCREEN */
+        #login-screen {
+            display: block;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            color: var(--text-red);
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 50px;
+            border: 2px solid #ffccd5;
+            outline: none;
+            font-size: 1.1rem;
+            text-align: center;
+            transition: 0.3s;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        input[type="password"]:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(255, 77, 109, 0.2);
+        }
+
+        button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+        }
+
+        .error-msg {
+            color: var(--text-red);
+            margin-top: 10px;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            min-height: 1.2rem;
+        }
+
+        /* SHAKE ANIMATION FOR WRONG PASSWORD */
+        .shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+
+        /* PHASE 2: MAIN CONTENT */
+        #main-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .love-letter {
+            font-family: 'Cairo', sans-serif;
+            direction: rtl;
+            line-height: 1.8;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            margin: 1.5rem 0;
+            white-space: pre-wrap; /* Preserves line breaks */
+        }
+
+        .highlight {
+            color: var(--text-red);
+            font-weight: 700;
+        }
+
+        /* TIMER STYLES */
+        .timer-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .time-box {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 10px;
+            border-radius: 10px;
+            min-width: 70px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .time-val {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .time-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #666;
+        }
+
+        .footer {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #888;
+            font-style: italic;
+        }
+
+        /* FLOATING HEARTS BG */
+        .heart-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            bottom: -100px;
+            background-color: var(--secondary-color);
+            display: inline-block;
+            height: 30px;
+            width: 30px;
+            margin: 0 10px;
+            border-radius: 50%;
+            animation: float 6s linear infinite;
+            opacity: 0.6;
+        }
+
+        .heart:before, .heart:after {
+            content: "";
+            position: absolute;
+            background-color: inherit;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        .heart:before { top: -50%; left: 0; }
+        .heart:after { left: 50%; top: 0; }
+        
+        .heart {
+            transform: rotate(-45deg);
+        }
+
+        @keyframes float {
+            0% { bottom: -100px; transform: rotate(-45deg) translateX(0); opacity: 1; }
+            100% { bottom: 100%; transform: rotate(-45deg) translateX(-20px); opacity: 0; }
+        }
+
+        /* MOBILE RESPONSIVENESS */
+        @media (max-width: 480px) {
+            h1 { font-size: 2.2rem; }
+            .card { padding: 1.5rem; }
+            .love-letter { font-size: 1rem; }
+            .time-box { min-width: 60px; }
+            .time-val { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="heart-bg" id="heart-bg"></div>
+
+    <div class="container">
+        
+        <!-- PHASE 1: LOGIN -->
+        <div id="login-screen" class="card">
+            <h1>Login to My Heart</h1>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Enter the password..." autocomplete="off">
+                <div class="error-msg" id="error-msg">Try again, sweetheart</div>
+            </div>
+            <button onclick="checkPassword()">Enter My Heart</button>
+        </div>
+
+        <!-- PHASE 2: SURPRISE -->
+        <div id="main-content" class="card">
+            <h1>Happy Valentine's Day<br>Dody ❤️</h1>
+            
+            <div class="love-letter">
+كل سنة وانتي طيبة ي <span class="highlight">اجمل حاجة حصلت ف حياتي...❤️</span>
+حبيت اعملك المفاجأة البسيطة دي عشان أقولك انك مش بس حبيبتي، أنتِ بنتي وصاحبتي وأقرب حد لقلبي 🩷
+
+وجودك ف يومي هو اللي بيديلو طعم، وأي وقت بيعدي وإحنا سوا بيبقى أحلى وقت ف عمري 💖
+
+ربنا يخليكي ليا، ويقدرني إني أسعدك دايماً وأكون الأمان والسند ليكي طول العمر 🫂
+
+<span class="highlight">بحبك يا نور عيني، وكل فلانتين واحنا مع بعض 😍💘</span>
+            </div>
+
+            <div class="timer-container">
+                <div class="time-box">
+                    <span class="time-val" id="days">0</span>
+                    <span class="time-label">Days</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-val" id="hours">0</span>
+                    <span class="time-label">Hours</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-val" id="minutes">0</span>
+                    <span class="time-label">Mins</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-val" id="seconds">0</span>
+                    <span class="time-label">Secs</span>
+                </div>
+            </div>
+
+            <div class="footer">
+                Forever yours, Youssef
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // CONFIGURATION
+        // ============================================
+        // 1. Set the password here
+        const CORRECT_PASSWORD = "162012";
+        
+        // 2. Set the Start Date here (YYYY-MM-DD)
+        const START_DATE = new Date("2026-01-16T00:00:00");
+        // ============================================
+
+        // ELEMENTS
+        const loginScreen = document.getElementById('login-screen');
+        const mainContent = document.getElementById('main-content');
+        const passwordInput = document.getElementById('password');
+        const errorMsg = document.getElementById('error-msg');
+        const heartBg = document.getElementById('heart-bg');
+
+        // PASSWORD LOGIC
+        function checkPassword() {
+            const inputVal = passwordInput.value;
+            
+            if (inputVal === CORRECT_PASSWORD) {
+                // Success: Fade out login, fade in content
+                loginScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loginScreen.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    // Trigger reflow
+                    void mainContent.offsetWidth;
+                    mainContent.style.opacity = '1';
+                    mainContent.style.transform = 'translateY(0)';
+                    
+                    // Start Background Hearts
+                    startFloatingHearts();
+                }, 500);
+            } else {
+                // Error: Shake animation
+                loginScreen.classList.add('shake');
+                errorMsg.style.opacity = '1';
+                passwordInput.value = '';
+                
+                // Remove class after animation finishes
+                setTimeout(() => {
+                    loginScreen.classList.remove('shake');
+                }, 500);
+            }
+        }
+
+        // Listen for "Enter" key on password input
+        passwordInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                checkPassword();
+            }
+        });
+
+        // TIMER LOGIC
+        function updateTimer() {
+            const now = new Date();
+            const diff = now - START_DATE;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / 1000 / 60) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById('days').innerText = days;
+            document.getElementById('hours').innerText = hours;
+            document.getElementById('minutes').innerText = minutes;
+            document.getElementById('seconds').innerText = seconds;
+        }
+
+        // Start timer immediately and update every second
+        setInterval(updateTimer, 1000);
+        updateTimer(); // Initial call
+
+        // BACKGROUND HEARTS ANIMATION
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            
+            // Randomize position and size
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 3 + 4 + "s"; // 4-7 seconds
+            
+            // Randomize color shade
+            const colors = ['#ff4d6d', '#c9184a', '#ff758f', '#ff8fa3'];
+            heart.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            // Randomize size
+            const size = Math.random() * 10 + 10 + "px"; // 10-20px (base size)
+            heart.style.width = size;
+            heart.style.height = size;
+            
+            heartBg.appendChild(heart);
+            
+            // Remove after animation to prevent memory leak
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }
+
+        function startFloatingHearts() {
+            setInterval(createHeart, 300);
+        }
+
+    </script>
+</body>
+</html>
